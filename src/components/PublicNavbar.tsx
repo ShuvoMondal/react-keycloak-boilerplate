@@ -12,14 +12,21 @@ export function PublicNavbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
-        {/* Brand / Logo */}
-        <Link to="/" className="ml-60 flex items-center space-x-2">
-          <Code2 className="h-6 w-6" />
-          <span className="font-bold">Boilerplate</span>
-        </Link>
+        {/* Brand / Logo - Left side with margin */}
+        <div className="flex items-center space-x-2 ml-100">
+          <Link to="/" className="flex items-center space-x-2">
+            <Code2 className="h-6 w-6" />
+            <span className="font-bold">Boilerplate</span>
+          </Link>
+        </div>
 
-        {/* Auth Buttons */}
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        {/* Empty space in the center to balance layout */}
+        <div className="flex flex-1 justify-center items-center">
+          {/* This space can be used for navigation if needed */}
+        </div>
+
+        {/* Auth Buttons - Right side */}
+        <div className="flex items-center space-x-4">
           {auth.isAuthenticated ? (
             <>
               <Button asChild variant="ghost">

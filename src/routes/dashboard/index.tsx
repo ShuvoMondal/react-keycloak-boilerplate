@@ -29,20 +29,25 @@ export const Route = createFileRoute("/dashboard/")({
 // A skeleton component to show while data is loading
 function DashboardLoadingSkeleton() {
   return (
-    <Card>
-      <CardHeader>
-        <Skeleton className="h-7 w-48" />
-        <Skeleton className="h-4 w-64 mt-2" />
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-2 mt-4">
-          <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-12 w-full" />
-          <Skeleton className="h-12 w-full" />
-          <Skeleton className="h-12 w-full" />
-        </div>
-      </CardContent>
-    </Card>
+    <div className="flex justify-center w-full my-6">
+      <Card className="w-full max-w-4xl">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-6 w-6" />
+            <Skeleton className="h-7 w-48" />
+          </div>
+          <Skeleton className="h-4 w-64 mt-2" />
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2 mt-4">
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
@@ -61,57 +66,61 @@ function DashboardComponent() {
 
   if (isError) {
     return (
-      <Alert variant="destructive">
-        <AlertTriangle className="h-4 w-4" />
-        <AlertTitle>Error Fetching Data</AlertTitle>
-        <AlertDescription>{(error as Error).message}</AlertDescription>
-      </Alert>
+      <div className="flex justify-center w-full my-6">
+        <Alert variant="destructive" className="max-w-2xl w-full">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Error Fetching Data</AlertTitle>
+          <AlertDescription>{(error as Error).message}</AlertDescription>
+        </Alert>
+      </div>
     );
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Users className="size-6" /> User Data from API
-        </CardTitle>
-        <CardDescription>
-          This data is fetched from a protected backend API endpoint.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[80px]">ID</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead className="text-right w-[80px]">Age</TableHead>
-              <TableHead>City</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data?.data && data.data.length > 0 ? (
-              data.data.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell className="text-right">{user.age}</TableCell>
-                  <TableCell>{user.city}</TableCell>
-                </TableRow>
-              ))
-            ) : (
-              // This is the new empty state
+    <div className="flex justify-center w-full my-6">
+      <Card className="w-full max-w-4xl">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Users className="size-6" /> User Data from API
+          </CardTitle>
+          <CardDescription>
+            This data is fetched from a protected backend API endpoint.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={5} className="h-24 text-center">
-                  No data available.
-                </TableCell>
+                <TableHead className="w-[80px]">ID</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead className="text-right w-[80px]">Age</TableHead>
+                <TableHead>City</TableHead>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+            </TableHeader>
+            <TableBody>
+              {data?.data && data.data.length > 0 ? (
+                data.data.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell className="font-medium">{user.id}</TableCell>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell className="text-right">{user.age}</TableCell>
+                    <TableCell>{user.city}</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                // This is the new empty state
+                <TableRow>
+                  <TableCell colSpan={5} className="h-24 text-center">
+                    No data available.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

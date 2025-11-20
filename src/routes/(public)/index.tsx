@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useAuth } from "react-oidc-context";
 import { Button } from "@/components/ui/button";
 import {
@@ -64,37 +64,33 @@ function HomeComponent() {
   const auth = useAuth();
   const handleLogin = () => auth.signinRedirect();
 
-  // Show a simple welcome message if the user is already logged in
-  if (auth.isAuthenticated) {
-    return (
-      <div className="container mx-auto max-w-5xl py-10 text-center">
-        <h1 className="text-4xl font-bold tracking-tight">Welcome Back!</h1>
-        <p className="mt-4 text-lg text-muted-foreground">
-          You are already logged in as{" "}
-          <strong>{auth.user?.profile.name}</strong>.
-        </p>
-        <Button asChild className="mt-6">
-          <a href="/dashboard">Go to Dashboard</a>
-        </Button>
-      </div>
-    );
-  }
-
   // Show the full landing page for logged-out users
   return (
     <div className="container mx-auto max-w-5xl py-10">
       {/* Hero Section */}
       <section className="text-center">
         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-          MERN Stack + Keycloak + Tanstack
+          Reactjs + Keycloak + Tanstack
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
           A production-ready, type-safe boilerplate for building modern web
           applications.
         </p>
-        <Button onClick={handleLogin} size="lg" className="mt-8">
-          Login to Get Started
-        </Button>
+        {auth.isAuthenticated ? (
+          <div className="mx-auto text-center">
+            <p className="mt-4 text-lg text-muted-foreground">
+              You are already logged in as{" "}
+              <strong>{auth.user?.profile.name}</strong>.
+            </p>
+            <Button asChild className="mt-6">
+              <Link to="/dashboard">Go to Dashboard</Link>
+            </Button>
+          </div>
+        ) : (
+          <Button onClick={handleLogin} size="lg" className="mt-8">
+            Login to Get Started
+          </Button>
+        )}
       </section>
 
       {/* Technologies Section */}
@@ -127,7 +123,10 @@ function HomeComponent() {
                 <strong>1. Clone the Repository:</strong>
               </p>
               <pre className="p-3 rounded-md bg-muted text-muted-foreground">
-                <code>git clone [your-repo-url]</code>
+                <code>
+                  git clone
+                  https://github.com/ShuvoMondal/react-keycloak-boilerplate.git
+                </code>
               </pre>
               <p>
                 <strong>2. Install Dependencies:</strong>
@@ -187,7 +186,9 @@ function HomeComponent() {
                   src/lib/api.ts
                 </code>
                 . Add your new API fetching functions in the{" "}
-                <code className="bg-muted px-1 py-0.5 rounded">src/api/</code>{" "}
+                <code className="bg-muted px-1 py-0.5 rounded">
+                  src/services/
+                </code>{" "}
                 directory.
               </CardDescription>
             </CardHeader>
